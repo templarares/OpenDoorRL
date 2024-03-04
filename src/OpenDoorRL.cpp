@@ -3,7 +3,8 @@
 OpenDoorRL::OpenDoorRL(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
 : mc_control::fsm::Controller(rm, dt, config)
 {
-
+  mc_rtc::Configuration init_pose_cfg(static_cast<std::string>(config("ETC_DIR")) + "/initial_pose.yaml");
+  robot().posW(init_pose_cfg("initial_pose"));
   mc_rtc::log::success("OpenDoorRL init done ");
 }
 

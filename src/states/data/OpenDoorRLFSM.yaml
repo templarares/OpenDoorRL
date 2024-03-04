@@ -1,0 +1,240 @@
+OpenDoorRLFSM:
+  base: Meta
+  StepByStep: true
+  transitions:
+    - [OpenDoorRLFSM::Standing, OK, OpenDoorRLFSM::RH2HandleApproach, Auto]
+    - [OpenDoorRLFSM::RH2HandleApproach, OK, OpenDoorRLFSM::RH2HandleAbove, Auto]
+    - [OpenDoorRLFSM::RH2HandleAbove, OK, OpenDoorRLFSM::RH2HandleDown, Auto]
+    - [OpenDoorRLFSM::RH2HandleDown, OK, OpenDoorRLFSM::RH2HandlePush, Auto]
+    - [OpenDoorRLFSM::RH2HandlePush, OK, OpenDoorRLFSM::Rewind, Auto]
+    - [OpenDoorRLFSM::Rewind, OK, OpenDoorRLFSM::LHPush, Auto]    
+  init: OpenDoorRLFSM::Standing
+OpenDoorRLFSM::Standing:
+  base: MetaTasks
+  tasks:
+    CoM:
+      type: com
+      above: [LeftFoot, RightFoot]
+      weight: 1000
+      completion:
+            AND:
+              - eval: 0.05
+              - speed: 1e-4
+
+OpenDoorRLFSM::RH2HandleApproach:
+  base: MetaTasks
+  tasks:
+    CoM:
+      type: com
+      move_com: [-0.02,0,0]
+      weight: 1000
+      completion:
+        timeout: 1.0
+    RH:
+      type: surfaceTransform
+      surface: RightHand
+      weight: 1000
+      stiffness: 5
+      # Target relative to the door's handle surface
+      # targetSurface:
+      #   robot: door
+      #   surface: Handle
+      #   offset_translation: [0, 0, -0.025]    - [OpenDoorRLFSM::RH2HandleAbove, OK, OpenDoorRLFSM::RH2HandleDown, Auto]
+      #   offset_rotation: [ -0.0255, -0.69,-0.714,-0.0685]
+      # moveWorld: [0.9393727,0.3428978, 0, 0, 0.2,0.0,0.0]
+      active_joints: [RArm0,RArm1,RArm2,RArm3,RArm4,RArm5,RArm6]
+      target:
+        translation: [0.434,-0.097,1.118]
+        rotation: [0.7384,0.1416,-0.659,-0.0134]
+      completion:
+          AND:
+            - eval: 0.05
+            - speed: 1e-4
+  AddCollisions:
+    - r1: bit_humanoid
+      r2: door
+      collisions:
+        - body1: LArm7
+          body2: door
+          iDist: 0.05
+          sDist: 0.01
+          damping: 0
+        - body1: RArm7
+          body2: door
+          iDist: 0.05
+          sDist: 0.005
+          damping: 0
+        - body1: RArm7
+          body2: handle
+          iDist: 0.1
+          sDist: 0.02
+          damping: 0
+  RemoveCollisionsAfter:
+    - r1: bit_humanoid
+      r2: door
+      collisions:
+        - body1: LArm7
+          body2: door
+          iDist: 0.05
+          sDist: 0.01
+          damping: 0
+        - body1: RArm7
+          body2: door
+          iDist: 0.05
+          sDist: 0.005
+          damping: 0
+        - body1: RArm7
+          body2: handle
+          iDist: 0.1
+          sDist: 0.02
+          damping: 0
+OpenDoorRLFSM::RH2HandleAbove:
+  base: MetaTasks
+  tasks:
+    CoM:
+      type: com
+      move_com: [0,0,0]
+      weight: 1000
+      completion:
+        timeout: 1.0
+    RH:
+      type: surfaceTransform
+      surface: RightHand
+      weight: 1000
+      stiffness: 5
+      # Target relative to the door's handle surface
+      # targetSurface:
+      #   robot: door
+      #   surface: Handle
+      #   offset_translation: [0, 0, -0.025]
+      #   offset_rotation: [ -0.0255, -0.69,-0.714,-0.0685]
+      # moveWorld: [0.9393727,0.3428978, 0, 0, 0.2,0.0,0.0]
+      active_joints: [RArm0,RArm1,RArm2,RArm3,RArm4,RArm5,RArm6]
+      target:
+        translation: [0.474,-0.097,1.118]
+        rotation: [0.7384,0.1416,-0.659,-0.0134]
+      completion:
+          AND:
+            - eval: 0.05
+            - speed: 1e-4
+
+
+OpenDoorRLFSM::RH2HandleDown:
+  base: MetaTasks
+  tasks:
+    CoM:
+      type: com
+      move_com: [0,0,0]
+      weight: 1000
+      completion:
+        timeout: 1.0
+    RH:
+      type: surfaceTransform
+      surface: RightHand
+      weight: 1000
+      stiffness: 15
+      # Target relative to the door's handle surface
+      # targetSurface:
+      #   robot: door
+      #   surface: Handle
+      #   offset_translation: [0, 0, -0.025]
+      #   offset_rotation: [ -0.0255, -0.69,-0.714,-0.0685]
+      # moveWorld: [0.9393727,0.3428978, 0, 0, 0.2,0.0,0.0]
+      active_joints: [RArm0,RArm1,RArm2,RArm3,RArm4,RArm5,RArm6]
+      target:
+        translation: [0.474,-0.107,1.018]
+        rotation: [0.7384,0.1416,-0.659,-0.0134]
+      completion:
+          AND:
+            - eval: 0.05
+            - speed: 1e-4
+
+OpenDoorRLFSM::RH2HandlePush:
+  base: MetaTasks
+  tasks:
+    CoM:
+      type: com
+      move_com: [0,0,0]
+      weight: 1000
+      completion:
+        timeout: 1.0
+    RH:
+      type: surfaceTransform
+      surface: RightHand
+      weight: 1000
+      stiffness: 150
+      # Target relative to the door's handle surface
+      # targetSurface:
+      #   robot: door
+      #   surface: Handle
+      #   offset_translation: [0, 0, -0.025]
+      #   offset_rotation: [ -0.0255, -0.69,-0.714,-0.0685]
+      # moveWorld: [0.9393727,0.3428978, 0, 0, 0.2,0.0,0.0]
+      active_joints: [RArm0,RArm1,RArm2,RArm3,RArm4,RArm5,RArm6]
+      target:
+        translation: [0.644,-0.07,1.025]
+        rotation: [0.7384,0.1416,-0.659,-0.0134]
+      completion:
+          AND:
+            - eval: 0.05
+            - speed: 1e-4
+
+OpenDoorRLFSM::Rewind:
+  base: MetaTasks
+  tasks:
+    CoM:
+      type: com
+      move_com: [0,0,0]
+      weight: 1000
+      completion:
+        timeout: 1.0
+    RH:
+      type: surfaceTransform
+      surface: RightHand
+      weight: 1000
+      stiffness: 5
+      # Target relative to the door's handle surface
+      # targetSurface:
+      #   robot: door
+      #   surface: Handle
+      #   offset_translation: [0, 0, -0.025]
+      #   offset_rotation: [ -0.0255, -0.69,-0.714,-0.0685]
+      # moveWorld: [0.9393727,0.3428978, 0, 0, 0.2,0.0,0.0]
+      active_joints: [RArm0,RArm1,RArm2,RArm3,RArm4,RArm5,RArm6]
+      target:
+        translation: [0.326,-0.14,0.99]
+        rotation: [0.7384,0.1416,-0.659,-0.0134]
+      completion:
+          AND:
+            - eval: 0.05
+            - speed: 1e-4
+
+OpenDoorRLFSM::LHPush:
+  base: MetaTasks
+  tasks:
+    CoM:
+      type: com
+      move_com: [0,0,0]
+      weight: 1000
+      completion:
+        timeout: 1.0
+    LH:
+      type: surfaceTransform
+      surface: LeftHand
+      weight: 1000
+      stiffness: 5
+      # Target relative to the door's handle surface
+      # targetSurface:
+      #   robot: door
+      #   surface: Handle
+      #   offset_translation: [0, 0, -0.025]
+      #   offset_rotation: [ -0.0255, -0.69,-0.714,-0.0685]
+      # moveWorld: [0.9393727,0.3428978, 0, 0, 0.2,0.0,0.0]
+      active_joints: [LArm0,LArm1,LArm2,LArm3,LArm4,LArm5,LArm6]
+      target:
+        translation: [0.825,0.496,0.984]
+        rotation: [0.69,0.154,-0.67,-0.222]
+      completion:
+          AND:
+            - eval: 0.05
+            - speed: 1e-4

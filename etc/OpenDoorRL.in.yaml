@@ -5,7 +5,7 @@ Managed: false
 StepByStep: true
 # Change idle behaviour, if true the state is kept until transition,
 # otherwise the FSM holds the last state until transition
-IdleKeepState: false
+IdleKeepState: true
 # Where to look for state libraries
 StatesLibraries:
 - "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@"
@@ -14,12 +14,21 @@ StatesLibraries:
 StatesFiles:
 - "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@/data"
 - "@MC_STATES_RUNTIME_INSTALL_PREFIX@/data"
+# Store the location of configuration files
+ETC_DIR: "@PROJECT_SOURCE_DIR@/etc"
 # If true, state factory will be more verbose
 VerboseStateFactory: false
 # Additional robots to load
 robots:
   ground:
     module: env/ground
+  door:
+    module: BITDoor
+    init_pos:
+      translation: [0.53, 0.7, 0.0]
+      rotation: [0.0, 0.0, 3.14]
+    stance:
+      handle: 1.57
 # General constraints, always on
 constraints:
 - type: contact
@@ -32,17 +41,17 @@ collisions:
   useMinimal: true
 # Initial set of contacts
 contacts:
-- r1: jvrc1
+- r1: bit_humanoid
   r2: ground
   r1Surface: LeftFoot
   r2Surface: AllGround
-- r1: jvrc1
+- r1: bit_humanoid
   r2: ground
   r1Surface: RightFoot
   r2Surface: AllGround
 
 # Some options for a specific robot
-jvrc1:
+bit_humanoid:
   posture:
     stiffness: 1
     weight: 10
@@ -53,6 +62,6 @@ jvrc1:
 states: {}
 # Transitions map
 transitions:
-- [OpenDoorRL_Initial, OK, OpenDoorRL_Initial, Strict]
+- [OpenDoorRL_Initial, OK, OpenDoorRLFSM, Strict]
 # Initial state
 init: OpenDoorRL_Initial
