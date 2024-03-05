@@ -25,7 +25,7 @@ bool Rewind::run(mc_control::fsm::Controller & ctl_)
     //q()[0] is Root node, which is empty for the fixed BITDoor robot
     if (ctl.realRobots().robots()[1].q()[1][0]>0.3)
     {
-        mc_rtc::log::success("door opened at {}",ctl.realRobots().robots()[1].q()[1][0]);
+        // mc_rtc::log::success("door opened at {}",ctl.realRobots().robots()[1].q()[1][0]);
         output("DoorOpened");
     }
     else

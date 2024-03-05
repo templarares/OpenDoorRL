@@ -7,7 +7,7 @@ void Teleport::configure(const mc_rtc::Configuration & config)
   if (config.has("dx"))
   {
     dx=config("dx");
-    mc_rtc::log::success("teleport dx is {}",dx);
+    // mc_rtc::log::success("teleport dx is {}",dx);
   }
   if (config.has("dy"))
   {
