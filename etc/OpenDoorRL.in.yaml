@@ -65,3 +65,38 @@ transitions:
 - [OpenDoorRL_Initial, OK, OpenDoorRLFSM, Strict]
 # Initial state
 init: OpenDoorRL_Initial
+
+
+
+# ObserverPipelines:
+#   name: "CoMObservation"
+#   gui: true
+#   observers:
+#     - type: Encoder
+#     - type: BodySensor
+#       update: true
+#       config:
+#         bodySensor: FloatingBase
+#         log:
+#           pose: true
+#           velocity: false
+#           acceleration: false
+
+ObserverPipelines:
+  name: MainRobotObservation
+  observers:
+    - type: Encoder
+      config:
+        position: encoderValues
+        velocity: encoderFiniteDifferences
+    - type: BodySensor
+      config:
+        method: control
+  name: DoorObservation
+  observers:
+    - type: Encoder
+      config:
+        robot: door
+        updateRobot: door
+        position: encoderValues
+        velocity: encoderFiniteDifferences
