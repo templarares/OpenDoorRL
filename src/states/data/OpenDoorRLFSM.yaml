@@ -16,7 +16,7 @@ OpenDoorRLFSM:
     - [OpenDoorRLFSM::LHPushAgain, OK, OpenDoorRLFSM::Rewind3, Auto]
   init: OpenDoorRLFSM::Standing
 OpenDoorRLFSM::Standing:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -28,7 +28,7 @@ OpenDoorRLFSM::Standing:
               - speed: 1e-4
 
 OpenDoorRLFSM::RH2HandleApproach:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -88,7 +88,7 @@ OpenDoorRLFSM::RH2HandleApproach:
           sDist: 0.02
           damping: 0
 OpenDoorRLFSM::RH2HandleAbove:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -119,7 +119,7 @@ OpenDoorRLFSM::RH2HandleAbove:
 
 
 OpenDoorRLFSM::RH2HandleDown:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -149,7 +149,7 @@ OpenDoorRLFSM::RH2HandleDown:
             - speed: 1e-2
 
 OpenDoorRLFSM::RH2HandlePush:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -179,7 +179,7 @@ OpenDoorRLFSM::RH2HandlePush:
             - speed: 1e-2
 
 OpenDoorRLFSM::RHDisengage:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -209,7 +209,7 @@ OpenDoorRLFSM::RHDisengage:
             - speed: 1e-2
 
 OpenDoorRLFSM::RewindRL:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -239,7 +239,7 @@ OpenDoorRLFSM::RewindRL:
             - speed: 1e-2
 
 OpenDoorRLFSM::LHReach:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -269,7 +269,7 @@ OpenDoorRLFSM::LHReach:
             - speed: 1e-4
   
 OpenDoorRLFSM::LHPush:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com
@@ -306,7 +306,7 @@ OpenDoorRLFSM::Teleport:
   steps: 50
 
 OpenDoorRLFSM::LHPushAgain:
-  base: MetaTasks
+  base: RLInterface
   tasks:
     CoM:
       type: com

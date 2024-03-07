@@ -1,0 +1,3 @@
+MainRobot: BITHumanoid
+Enabled: OpenDoorRL
+Timestep: 0.005

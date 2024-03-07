@@ -1,0 +1,4 @@
+base: RLInterface
+tasks:
+  com:
+    name: COMCOM

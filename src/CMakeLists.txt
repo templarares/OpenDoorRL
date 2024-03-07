@@ -18,3 +18,7 @@ add_controller(${PROJECT_NAME}_controller lib.cpp "")
 target_link_libraries(${PROJECT_NAME}_controller PUBLIC ${PROJECT_NAME})
 
 add_subdirectory(states)
+
+pybind11_add_module(mc_rtc_rl python_module.cpp)
+target_link_libraries(mc_rtc_rl PUBLIC ${PROJECT_NAME} mc_mujoco::mc_mujoco)
+set_target_properties(mc_rtc_rl PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/python)
