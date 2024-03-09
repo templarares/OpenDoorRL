@@ -57,14 +57,14 @@ bit_humanoid:
     weight: 10
   ff:
     stiffness: 2
-    weight: 100
+    weight: 100FloatingBase
 # Implement some additional text states
 states: {}
 # Transitions map
 transitions:
-- [OpenDoorRL_Initial, OK, OpenDoorRLFSM, Strict]
+- [Initial, OK, OpenDoorRLFSM, Auto]
 # Initial state
-init: OpenDoorRL_Initial
+init: Initial
 
 
 
@@ -91,7 +91,11 @@ ObserverPipelines:
         velocity: encoderFiniteDifferences
     - type: BodySensor
       config:
-        method: control
+        bodySensor: FloatingBase
+        log:
+          pose: true
+          velocity: false
+          acceleration: false
   name: DoorObservation
   observers:
     - type: Encoder
@@ -100,3 +104,5 @@ ObserverPipelines:
         updateRobot: door
         position: encoderValues
         velocity: encoderFiniteDifferences
+Log: false
+TerminalLog: false

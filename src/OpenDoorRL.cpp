@@ -3,8 +3,8 @@
 OpenDoorRL::OpenDoorRL(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
 : mc_control::fsm::Controller(rm, dt, config)
 {
-  mc_rtc::Configuration init_pose_cfg(static_cast<std::string>(config("ETC_DIR")) + "/initial_pose.yaml");
-  robot().posW(init_pose_cfg("initial_pose"));
+  // mc_rtc::Configuration init_pose_cfg(static_cast<std::string>(config("ETC_DIR")) + "/initial_pose.yaml");
+  // robot().posW(init_pose_cfg("initial_pose"));
 
   /* Callback for when an RL interface state just completed */
   datastore().make_call("RLInterface::done", [](const std::string &, mc_control::fsm::Controller &) {});
@@ -61,17 +61,17 @@ OpenDoorRL::OpenDoorRL(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Con
     return sva::interpolate(robot.surfacePose("RightFootCenter"), robot.surfacePose("LeftFootCenter"), ratio);
   });
 
-  // //use pid to deal with multi-occupation of the intitial pose file
-  // pid_t pid = ::getpid();
-  // mc_rtc::Configuration init_pose_cfg(static_cast<std::string>(config("ETC_DIR")) + "/initial_pose"+std::to_string(pid)+".yaml");
-  // if(init_pose_cfg.has("initial_pose_rand"))
-  // {
-  //   robot().posW(init_pose_cfg("initial_pose_rand"));
-  // }
-  // else if(init_pose_cfg.has("initial_pose"))
-  // {
-  //   robot().posW(init_pose_cfg("initial_pose"));
-  // }
+  //use pid to deal with multi-occupation of the intitial pose file
+  pid_t pid = ::getpid();
+  mc_rtc::Configuration init_pose_cfg(static_cast<std::string>(config("ETC_DIR")) + "/initial_pose"+".yaml");
+  if(init_pose_cfg.has("initial_pose_rand"))
+  {
+    robot().posW(init_pose_cfg("initial_pose_rand"));
+  }
+  else if(init_pose_cfg.has("initial_pose"))
+  {
+    robot().posW(init_pose_cfg("initial_pose"));
+  }
 
 
   mc_rtc::log::success("OpenDoorRL init done ");

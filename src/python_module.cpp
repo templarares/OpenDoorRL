@@ -436,7 +436,7 @@ PYBIND11_MODULE(mc_rtc_rl, m)
       sva::PTransformd deviation=sva::PTransformd(sva::RotZ(4.0*rand1), Eigen::Vector3d(rand2,abs(rand3), 0));
       sva::PTransformd newPose=deviation*initPose;
       resetAttitudes.insert({gc.robot().name(),newPose});
-      resetAttitudes.insert({"BITXuanyuan",newPose}); 
+      resetAttitudes.insert({"BITHumanoid",newPose}); 
       pid_t pid = ::getpid();
       std::string initial_pose_yaml = etc_dir + "/initial_pose"+std::to_string(pid)+".yaml";
       mc_rtc::Configuration initialRand;

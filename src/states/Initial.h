@@ -2,7 +2,7 @@
 
 #include <mc_control/fsm/State.h>
 
-struct OpenDoorRL_Initial : mc_control::fsm::State
+struct Initial : mc_control::fsm::State
 {
 
     void configure(const mc_rtc::Configuration & config) override;
@@ -13,4 +13,5 @@ struct OpenDoorRL_Initial : mc_control::fsm::State
 
     void teardown(mc_control::fsm::Controller & ctl) override;
 private:
+    int iteration_counter_=0;
 };

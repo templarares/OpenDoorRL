@@ -1,19 +1,19 @@
 OpenDoorRLFSM:
-  base: Meta
+  base: RLMeta
   StepByStep: true
   transitions:
-    - [OpenDoorRLFSM::Standing, OK, OpenDoorRLFSM::RH2HandleApproach, Auto]
-    - [OpenDoorRLFSM::RH2HandleApproach, OK, OpenDoorRLFSM::RH2HandleAbove, Auto]
-    - [OpenDoorRLFSM::RH2HandleAbove, OK, OpenDoorRLFSM::RH2HandleDown, Auto]
-    - [OpenDoorRLFSM::RH2HandleDown, OK, OpenDoorRLFSM::RH2HandlePush, Auto]
-    - [OpenDoorRLFSM::RH2HandlePush, OK, OpenDoorRLFSM::RHDisengage, Auto]
-    - [OpenDoorRLFSM::RHDisengage, OK, OpenDoorRLFSM::Rewind, Auto]
-    - [OpenDoorRLFSM::Rewind, OK, OpenDoorRLFSM::LHReach, Auto]    
-    - [OpenDoorRLFSM::LHReach, OK, OpenDoorRLFSM::LHPush, Auto]   
-    - [OpenDoorRLFSM::LHPush, OK, OpenDoorRLFSM::Rewind, Auto]  
-    - [OpenDoorRLFSM::Rewind, DoorOpened, OpenDoorRLFSM::Teleport, Auto]
-    - [OpenDoorRLFSM::Teleport, OK, OpenDoorRLFSM::LHPushAgain, Auto]
-    - [OpenDoorRLFSM::LHPushAgain, OK, OpenDoorRLFSM::Rewind3, Auto]
+    - [OpenDoorRLFSM::Standing, OK, OpenDoorRLFSM::RH2HandleApproach, StepByStep]
+    - [OpenDoorRLFSM::RH2HandleApproach, OK, OpenDoorRLFSM::RH2HandleAbove, StepByStep]
+    - [OpenDoorRLFSM::RH2HandleAbove, OK, OpenDoorRLFSM::RH2HandleDown, StepByStep]
+    - [OpenDoorRLFSM::RH2HandleDown, OK, OpenDoorRLFSM::RH2HandlePush, StepByStep]
+    - [OpenDoorRLFSM::RH2HandlePush, OK, OpenDoorRLFSM::RHDisengage, StepByStep]
+    - [OpenDoorRLFSM::RHDisengage, OK, OpenDoorRLFSM::Rewind, StepByStep]
+    - [OpenDoorRLFSM::Rewind, OK, OpenDoorRLFSM::LHReach, StepByStep]    
+    - [OpenDoorRLFSM::LHReach, OK, OpenDoorRLFSM::LHPush, StepByStep]   
+    - [OpenDoorRLFSM::LHPush, OK, OpenDoorRLFSM::Rewind, StepByStep]  
+    - [OpenDoorRLFSM::Rewind, DoorOpened, OpenDoorRLFSM::Teleport, StepByStep]
+    - [OpenDoorRLFSM::Teleport, OK, OpenDoorRLFSM::LHPushAgain, StepByStep]
+    - [OpenDoorRLFSM::LHPushAgain, OK, OpenDoorRLFSM::Rewind3, StepByStep]
   init: OpenDoorRLFSM::Standing
 OpenDoorRLFSM::Standing:
   base: RLInterface
@@ -171,7 +171,7 @@ OpenDoorRLFSM::RH2HandlePush:
       # moveWorld: [0.9393727,0.3428978, 0, 0, 0.2,0.0,0.0]
       active_joints: [RArm0,RArm1,RArm2,RArm3,RArm4,RArm5,RArm6]
       target:
-        translation: [0.624,-0.07,1.025]
+        translation: [0.5824,-0.07,1.025]
         rotation: [0.7384,0.1416,-0.659,-0.0134]
       completion:
           AND:

@@ -1,4 +1,4 @@
-add_fsm_state_simple(OpenDoorRL_Initial)
+add_fsm_state_simple(Initial)
 add_fsm_state_simple(Teleport)
 add_fsm_state_simple(Rewind)
 add_fsm_state_simple(RLInterface)
