@@ -370,6 +370,12 @@ PYBIND11_MODULE(mc_rtc_rl, m)
           std::vector<double> posW_rot(posW.angular().data(), posW.angular().data() + 3);
           return posW_rot;
           })
+    .def("door_handle",[](mc_control::MCGlobalController & gc){
+            return gc.realRobots().robots()[1].q()[2][0];
+          })
+    .def("door_door",[](mc_control::MCGlobalController & gc){
+            return gc.realRobots().robots()[1].q()[1][0];
+          })
     .def("com",[](mc_control::MCGlobalController & gc){
             return gc.realRobot().com();
           })
