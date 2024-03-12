@@ -7,11 +7,11 @@ OpenDoorRLFSM:
     - [OpenDoorRLFSM::RH2HandleAbove, OK, OpenDoorRLFSM::RH2HandleDown, StepByStep]
     - [OpenDoorRLFSM::RH2HandleDown, OK, OpenDoorRLFSM::RH2HandlePush, StepByStep]
     - [OpenDoorRLFSM::RH2HandlePush, OK, OpenDoorRLFSM::RHDisengage, StepByStep]
-    - [OpenDoorRLFSM::RHDisengage, OK, OpenDoorRLFSM::Rewind, StepByStep]
-    - [OpenDoorRLFSM::Rewind, OK, OpenDoorRLFSM::LHReach, StepByStep]    
+    - [OpenDoorRLFSM::RHDisengage, OK, OpenDoorRLFSM::Rewind1, Auto]
+    - [OpenDoorRLFSM::Rewind1, OK, OpenDoorRLFSM::LHReach, StepByStep]    
     - [OpenDoorRLFSM::LHReach, OK, OpenDoorRLFSM::LHPush, StepByStep]   
-    - [OpenDoorRLFSM::LHPush, OK, OpenDoorRLFSM::Rewind, StepByStep]  
-    - [OpenDoorRLFSM::Rewind, DoorOpened, OpenDoorRLFSM::Teleport, StepByStep]
+    - [OpenDoorRLFSM::LHPush, OK, OpenDoorRLFSM::Rewind2, Auto]  
+    - [OpenDoorRLFSM::Rewind2, OK, OpenDoorRLFSM::Teleport, Auto]
     - [OpenDoorRLFSM::Teleport, OK, OpenDoorRLFSM::LHPushAgain, StepByStep]
     - [OpenDoorRLFSM::LHPushAgain, OK, OpenDoorRLFSM::Rewind3, StepByStep]
   init: OpenDoorRLFSM::Standing
@@ -53,9 +53,11 @@ OpenDoorRLFSM::RH2HandleApproach:
         translation: [0.434,-0.097,1.118]
         rotation: [0.7384,0.1416,-0.659,-0.0134]
       completion:
-          AND:
-            - eval: 0.05
-            - speed: 1e-4
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-2
   AddCollisions:
     - r1: bit_humanoid
       r2: door
@@ -113,9 +115,11 @@ OpenDoorRLFSM::RH2HandleAbove:
       #   translation: [0.474,-0.097,1.118]
       #   rotation: [0.7384,0.1416,-0.659,-0.0134]
       completion:
-          AND:
-            - eval: 0.05
-            - speed: 1e-2
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-2
 
 
 OpenDoorRLFSM::RH2HandleDown:
@@ -144,9 +148,11 @@ OpenDoorRLFSM::RH2HandleDown:
       #   translation: [0.474,-0.107,1.018]
       #   rotation: [0.7384,0.1416,-0.659,-0.0134]
       completion:
-          AND:
-            - eval: 0.05
-            - speed: 1e-2
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-2
 
 OpenDoorRLFSM::RH2HandlePush:
   base: RLInterface
@@ -174,9 +180,11 @@ OpenDoorRLFSM::RH2HandlePush:
         translation: [0.5824,-0.07,1.025]
         rotation: [0.7384,0.1416,-0.659,-0.0134]
       completion:
-          AND:
-            - eval: 0.05
-            - speed: 1e-2
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-2
 
 OpenDoorRLFSM::RHDisengage:
   base: RLInterface
@@ -204,9 +212,11 @@ OpenDoorRLFSM::RHDisengage:
       #   translation: [0.624,-0.07,1.025]
       #   rotation: [0.7384,0.1416,-0.659,-0.0134]
       completion:
-          AND:
-            - eval: 0.05
-            - speed: 1e-2
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-2
 
 OpenDoorRLFSM::RewindRL:
   base: RLInterface
@@ -234,9 +244,11 @@ OpenDoorRLFSM::RewindRL:
         translation: [0.326,-0.14,0.99]
         rotation: [0.7384,0.1416,-0.659,-0.0134]
       completion:
-          AND:
-            - eval: 0.05
-            - speed: 1e-2
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-2
 
 OpenDoorRLFSM::LHReach:
   base: RLInterface
@@ -264,9 +276,11 @@ OpenDoorRLFSM::LHReach:
         translation: [0.38,0.288,0.95]
         rotation: [0.726,-0.208,-0.653,-0.05]
       completion:
-          AND:
-            - eval: 0.05
-            - speed: 1e-4
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-4
   
 OpenDoorRLFSM::LHPush:
   base: RLInterface
@@ -294,9 +308,11 @@ OpenDoorRLFSM::LHPush:
         translation: [0.714,0.372,1.03]
         rotation: [0.75,0.002,-0.613,-0.23]
       completion:
-          AND:
-            - eval: 0.1
-            - timeout: 1
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-2
 
 OpenDoorRLFSM::Teleport:
   base: Teleport
@@ -332,9 +348,18 @@ OpenDoorRLFSM::LHPushAgain:
       #   translation: [0.714,0.372,1.03]
       #   rotation: [0.75,0.002,-0.613,-0.23]
       completion:
-          AND:
-            - eval: 0.1
-            - timeout: 1
+          OR:
+            - timeout: 2.0
+            - AND:
+                - eval: 0.05
+                - speed: 1e-2
+
+OpenDoorRLFSM::Rewind1:
+  base: OpenDoorRLFSM::Rewind
+
+OpenDoorRLFSM::Rewind2:
+  base: OpenDoorRLFSM::Rewind
+
 
 OpenDoorRLFSM::Rewind3:
   base: OpenDoorRLFSM::Rewind

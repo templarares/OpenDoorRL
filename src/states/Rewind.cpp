@@ -22,16 +22,7 @@ bool Rewind::run(mc_control::fsm::Controller & ctl_)
   auto pt = ctl.getPostureTask("bit_humanoid");
   if (pt->speed().norm()<0.001 || pt->eval().norm()<0.05)
   {
-    //q()[0] is Root node, which is empty for the fixed BITDoor robot
-    if (ctl.realRobots().robots()[1].q()[1][0]>0.3)
-    {
-        // mc_rtc::log::success("door opened at {}",ctl.realRobots().robots()[1].q()[1][0]);
-        output("DoorOpened");
-    }
-    else
-    {
-        output("OK");
-    }    
+    output("OK");    
     return true;
   }
   return false;
@@ -40,6 +31,13 @@ bool Rewind::run(mc_control::fsm::Controller & ctl_)
 void Rewind::teardown(mc_control::fsm::Controller & ctl_)
 {
   auto & ctl = static_cast<OpenDoorRL &>(ctl_);
+  if (ctl.datastore().has("StateDone")){
+    ctl.datastore().assign("StateDone",true);
+  }
+  else
+  {
+    ctl.datastore().make<bool>("StateDone",true);
+  }
 }
 
 EXPORT_SINGLE_STATE("OpenDoorRLFSM::Rewind", Rewind)
