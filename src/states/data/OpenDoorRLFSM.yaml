@@ -30,6 +30,11 @@ OpenDoorRLFSM::Standing:
 OpenDoorRLFSM::RH2HandleApproach:
   base: RLInterface
   tasks:
+    FixDoor:
+      type: posture
+      robot: door
+      weight: 100000
+      stiffness: 100
     CoM:
       type: com
       move_com: [-0.02,0,0]
@@ -92,6 +97,11 @@ OpenDoorRLFSM::RH2HandleApproach:
 OpenDoorRLFSM::RH2HandleAbove:
   base: RLInterface
   tasks:
+    FixDoor:
+      type: posture
+      robot: door
+      weight: 100000
+      stiffness: 100
     CoM:
       type: com
       move_com: [0,0,0]  
@@ -120,11 +130,30 @@ OpenDoorRLFSM::RH2HandleAbove:
             - AND:
                 - eval: 0.05
                 - speed: 1e-2
+  RemoveCollisionsAfter:
+    - r1: bit_humanoid
+      r2: door
+      collisions:
+        - body1: RArm7
+          body2: door
+          iDist: 0.05
+          sDist: 0.005
+          damping: 0
+        - body1: RArm7
+          body2: handle
+          iDist: 0.1
+          sDist: 0.02
+          damping: 0
 
 
 OpenDoorRLFSM::RH2HandleDown:
   base: RLInterface
-  tasks:
+  tasks:    
+    FixDoor:
+      type: posture
+      robot: door
+      weight: 100000
+      stiffness: 100
     CoM:
       type: com
       move_com: [0,0,0]

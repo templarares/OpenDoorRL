@@ -437,9 +437,9 @@ PYBIND11_MODULE(mc_rtc_rl, m)
       initPose=initial("initial_pose");
       //generate three random numbers in the range of (-0.02,0.02)
       double rand1=0.25*(rand()-0.5*RAND_MAX)/RAND_MAX;
-      double rand2=0.40*(rand()-0.5*RAND_MAX)/RAND_MAX;
-      double rand3=0.40*(rand()-0.5*RAND_MAX)/RAND_MAX;
-      sva::PTransformd deviation=sva::PTransformd(sva::RotZ(4.0*rand1), Eigen::Vector3d(rand2,abs(rand3), 0));
+      double rand2=0.2*(rand()-0.5*RAND_MAX)/RAND_MAX;
+      double rand3=0.2*(rand()-0.5*RAND_MAX)/RAND_MAX;
+      sva::PTransformd deviation=sva::PTransformd(sva::RotZ(5.0*rand1), Eigen::Vector3d(rand2,rand3, 0));
       sva::PTransformd newPose=deviation*initPose;
       resetAttitudes.insert({gc.robot().name(),newPose});
       resetAttitudes.insert({"BITHumanoid",newPose}); 

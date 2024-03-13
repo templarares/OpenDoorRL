@@ -23,7 +23,7 @@ void RLInterfaceState::configure(const mc_rtc::Configuration & config)
     remove_collisions_config_ = {};
     add_collisions_after_config_ = {};
     remove_collisions_after_config_ = {};
-    constraints_config_ = {};
+    // constraints_config_ = {};
     tasks_config_ = {};
     remove_posture_task_ = {};
   }
@@ -59,13 +59,20 @@ void RLInterfaceState::start(Controller & ctl)
     actualConfig_.load(config);
     // Note: we call the non virtual interface to handle all entries
     this->configure_(actualConfig_);
-    start_(ctl);
+    // // set weight and stiffness of the door's posture task to be very high, otherwise collision avoidance wont work properly
+    // start_(ctl);
+    // auto pt = ctl.getPostureTask("door");
+    // pt->stiffness(88.0);
+    // pt->weight(10000.0);
   }
 }
 
 bool RLInterfaceState::run(Controller & ctl)
 {
   iterationCounter_++;
+  auto pt = ctl.getPostureTask("door");
+  pt->stiffness(88.0);
+  pt->weight(10000.0);
   return MetaTasksState::run(ctl);
 }
 
