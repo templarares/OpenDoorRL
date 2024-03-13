@@ -47,12 +47,6 @@ void Initial::start(mc_control::fsm::Controller & ctl_)
   {
     SetInitialPose(ctl, initial_pose_);
   }
-  // mc_solver::DynamicsConstraint dynamicsConstraint_;
-  // ctl.solver().addConstraintSet(dynamicsConstraint_);
-  // // set weight and stiffness of the door's posture task to be very high, otherwise collision avoidance wont work properly
-  // auto pt = ctl.getPostureTask("door");
-  // pt->stiffness(88.0);
-  // pt->weight(10000.0);
 }
 
 bool Initial::run(mc_control::fsm::Controller & ctl_)

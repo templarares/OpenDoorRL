@@ -34,6 +34,10 @@ constraints:
 - type: contact
 - type: dynamics
   damper: [0.1, 0.01, 0.5]
+  velocityPercent: 0.8
+- type: kinematics
+  robot: door
+  damper: [0.1, 0.01, 0.5]
 - type: compoundJoint
 # Collision constraint
 collisions:
@@ -51,6 +55,10 @@ contacts:
   r2Surface: AllGround
 
 # Some options for a specific robot
+door:
+  posture:
+    stiffness: 88
+    weight: 10000
 bit_humanoid:
   posture:
     stiffness: 1
@@ -105,4 +113,4 @@ ObserverPipelines:
         position: encoderValues
         velocity: encoderFiniteDifferences
 Log: false
-TerminalLog: false
+TerminalLog: true
