@@ -79,8 +79,8 @@ OpenDoorRLFSM::RH2HandleApproach:
           damping: 0
         - body1: RArm7
           body2: handle
-          iDist: 0.1
-          sDist: 0.02
+          iDist: 0.02
+          sDist: 0.01
           damping: 0
   RemoveCollisionsAfter:
     - r1: bit_humanoid
@@ -141,8 +141,8 @@ OpenDoorRLFSM::RH2HandleAbove:
           damping: 0
         - body1: RArm7
           body2: handle
-          iDist: 0.1
-          sDist: 0.02
+          iDist: 0.02
+          sDist: 0.01
           damping: 0
 
 
