@@ -90,21 +90,53 @@ init: Initial
 #           velocity: false
 #           acceleration: false
 
+# ObserverPipelines:
+  # name: MainRobotObservation
+  # observers:
+  #   - type: Encoder
+  #     config:
+  #       position: encoderValues
+  #       velocity: encoderFiniteDifferences
+  #   - type: BodySensor
+  #     config:
+  #       bodySensor: FloatingBase
+  #       log:
+  #         pose: true
+  #         velocity: false
+  #         acceleration: false
 ObserverPipelines:
-  name: MainRobotObservation
+- name: "CoMObservation"
+  gui: true
   observers:
     - type: Encoder
-      config:
-        position: encoderValues
-        velocity: encoderFiniteDifferences
     - type: BodySensor
+      update: true
       config:
         bodySensor: FloatingBase
         log:
           pose: true
           velocity: false
           acceleration: false
-  name: DoorObservation
+# ObserverPipelines:
+# - name: "MainPipeline"
+#   gui: true
+#   observers:
+#     - type: Encoder
+#       update: true
+# #      config:
+# #        position: encoderValues            #    - Sets joint position from encoder sensor values (default)
+# #        velocity: encoderFiniteDifferences
+#     - type: BodySensor
+#       update: true                        #   Do not update the real robot state
+#       gui: true                           #   Do not display in the gui
+#       config:                              #
+#         bodySensor: FloatingBase
+    # - type: KinematicInertial
+    #   update: false                         #   update the real robot instance from its results
+    #   gui: false
+    #   config:
+    #     imuBodySensor: Accelerometer
+- name: DoorObservation
   observers:
     - type: Encoder
       config:

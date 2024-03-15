@@ -63,8 +63,8 @@ bool Initial::run(mc_control::fsm::Controller & ctl_)
 void Initial::teardown(mc_control::fsm::Controller & ctl_)
 {
   auto & ctl = static_cast<OpenDoorRL &>(ctl_);
-  // sva::PTransformd realPosW(ctl.robot().bodySensor("FloatingBase").orientation(),ctl.robot().bodySensor("FloatingBase").position());
-  // ctl.robot().posW(realPosW);
+  sva::PTransformd realPosW(ctl.robot().bodySensor("FloatingBase").orientation(),ctl.robot().bodySensor("FloatingBase").position());
+  ctl.robot().posW(realPosW);
   if (ctl.datastore().has("StateDone")){
     ctl.datastore().assign("StateDone",true);
   }
