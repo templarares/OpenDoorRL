@@ -89,10 +89,7 @@ OpenDoorRLFSM::RH2HandleApproach:
         - body1: LArm7
           body2: door
           iDist: 0.05
-          sDist: 0.01Reach
-          body2: handle
-          iDist: 0.1
-          sDist: 0.02
+          sDist: 0.01
           damping: 0
 OpenDoorRLFSM::RH2HandleAbove:
   base: RLInterface
